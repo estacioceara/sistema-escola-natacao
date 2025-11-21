@@ -19,5 +19,10 @@ cd setup-laravel-docker
 docker compose up -d
 ```
 
+4. Instalar as dependencias
+```shell
+docker compose exec -T php composer install  
+```
+
 Pronto, deve estar rodando em <http://localhost:8000>
 >>>>>>> 6d2fe4c (Create README.md)
