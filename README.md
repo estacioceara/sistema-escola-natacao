@@ -6,19 +6,20 @@ Repositorio usado para a aula de métricas de software
 
 1. Clonar a aplicação
 ```shell
-git clone https://github.com/alessandrofeitoza/setup-laravel-docker
+git clone https://github.com/digitalcollege-classes/landing-page
 ```
 
 2. Entrar no diretório
 ```shell
-cd setup-laravel-docker
+cd landing-page
 ```
 
 3. Subir o docker
 ```shell
-docker compose up -d
+make up
 ```
 
+<<<<<<< HEAD
 4. Instalar as dependencias
 ```shell
 docker compose exec -T php composer install  
@@ -45,10 +46,4 @@ docker compose exec -T php php artisan db:seed
 ```
 
 
-<<<<<<< HEAD
 Pronto, deve estar rodando em <http://localhost:8000>
->>>>>>> 6d2fe4c (Create README.md)
-=======
-Pronto, deve estar rodando em <http://localhost:8080>
-Pronto, deve estar rodando em <http://localhost:8080>
->>>>>>> 5c7403f (Update README.md)
