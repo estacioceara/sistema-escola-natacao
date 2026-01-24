@@ -1,0 +1,37 @@
+services:
+  php:
+    container_name: setup-swim_php
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./site:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - setup-swim_network
+
+  nginx:
+    container_name: setup-swim_nginx
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '8080:80'
+      - '443:443'
+    volumes:
+      - ./site:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - setup-swim_network
+
+networks:
+  setup-swim_network:
+    driver: bridge
+
+volumes:
+  setup-data:
+    driver: local
