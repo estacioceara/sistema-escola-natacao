@@ -4,12 +4,29 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTime;
+
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity()]
 class Student
 {
+    #[ORM\Id] #[ORM\GeneratedValue] #[ORM\Column]
+    private int $id ;
+
+    #[ORM\Column(length: 100)]
     private string $name;
+
+    #[ORM\Column(type: 'date')]
     private DateTime $birthDate;
+
+    #[ORM\Column(length: 11, nullable: true)]
     private ?string $cpf;
+
+    #[ORM\Column(length: 20)]
     private string $phone;
+
+    #[ORM\Column(length: 255)]
     private string $notes;
 
     private Address $address;
