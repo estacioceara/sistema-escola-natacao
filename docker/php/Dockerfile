@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 FROM php:8.5-fpm
-=======
-FROM php:8.4-fpm
->>>>>>> origin/main
 
 WORKDIR /var/www
 
