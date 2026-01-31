@@ -2,54 +2,54 @@
 
 class Student
 {
-    private string $nome;
-    private DateTime $dataNascimento;
+    private string $name;
+    private DateTime $birthDate;
     private ?string $cpf;
-    private string $telefone;
-    private string $obs;
+    private string $phone;
+    private string $notes;
 
-    private Endereco $endereco;
-    private Responsavel $responsavel;
-    private Matricula $matricula;
+    private Address $address;
+    private Guardian $guardian;
+    private Enrollment $enrollment;
 
     public function __construct(
-        string $nome,
-        DateTime $dataNascimento,
+        string $name,
+        DateTime $birthDate,
         ?string $cpf,
-        string $telefone,
-        string $obs,
-        Endereco $endereco,
-        Responsavel $responsavel,
-        Matricula $matricula
+        string $phone,
+        string $notes,
+        Address $address,
+        Guardian $guardian,
+        Enrollment $enrollment
     ) {
-        $this->nome = $nome;
-        $this->dataNascimento = $dataNascimento;
+        $this->name = $name;
+        $this->birthDate = $birthDate;
         $this->cpf = $cpf;
-        $this->telefone = $telefone;
-        $this->obs = $obs;
-        $this->endereco = $endereco;
-        $this->responsavel = $responsavel;
-        $this->matricula = $matricula;
+        $this->phone = $phone;
+        $this->notes = $notes;
+        $this->address = $address;
+        $this->guardian = $guardian;
+        $this->enrollment = $enrollment;
     }
 
-    public function getNome(): string
+    public function getName(): string
     {
-        return $this->nome;
+        return $this->name;
     }
 
-    public function setNome(string $nome): void
+    public function setName(string $name): void
     {
-        $this->nome = $nome;
+        $this->name = $name;
     }
 
-    public function getDataNascimento(): DateTime
+    public function getBirthDate(): DateTime
     {
-        return $this->dataNascimento;
+        return $this->birthDate;
     }
 
-    public function setDataNascimento(DateTime $dataNascimento): void
+    public function setBirthDate(DateTime $birthDate): void
     {
-        $this->dataNascimento = $dataNascimento;
+        $this->birthDate = $birthDate;
     }
 
     public function getCpf(): ?string
@@ -62,74 +62,74 @@ class Student
         $this->cpf = $cpf;
     }
 
-    public function getTelefone(): string
+    public function getPhone(): string
     {
-        return $this->telefone;
+        return $this->phone;
     }
 
-    public function setTelefone(string $telefone): void
+    public function setPhone(string $phone): void
     {
-        $this->telefone = $telefone;
+        $this->phone = $phone;
     }
 
-    public function getObs(): string
+    public function getNotes(): string
     {
-        return $this->obs;
+        return $this->notes;
     }
 
-    public function setObs(string $obs): void
+    public function setNotes(string $notes): void
     {
-        $this->obs = $obs;
+        $this->notes = $notes;
     }
 
-    public function getEndereco(): Endereco
+    public function getAddress(): Address
     {
-        return $this->endereco;
+        return $this->address;
     }
 
-    public function setEndereco(Endereco $endereco): void
+    public function setAddress(Address $address): void
     {
-        $this->endereco = $endereco;
+        $this->address = $address;
     }
 
-    public function getResponsavel(): Responsavel
+    public function getGuardian(): Guardian
     {
-        return $this->responsavel;
+        return $this->guardian;
     }
 
-    public function setResponsavel(Responsavel $responsavel): void
+    public function setGuardian(Guardian $guardian): void
     {
-        $this->responsavel = $responsavel;
+        $this->guardian = $guardian;
     }
 
-    public function getMatricula(): Matricula
+    public function getEnrollment(): Enrollment
     {
-        return $this->matricula;
+        return $this->enrollment;
     }
 
-    public function setMatricula(Matricula $matricula): void
+    public function setEnrollment(Enrollment $enrollment): void
     {
-        $this->matricula = $matricula;
+        $this->enrollment = $enrollment;
     }
 
-    public function matricular(): void
-    {
-        // 
-    }
-
-    public function editar(array $dados): void
+    public function enroll(): void
     {
         // 
     }
 
-    public function buscarInformacoes(): array
+    public function update(array $data): void
+    {
+        // 
+    }
+
+    public function fetchInformation(): array
     {
         // 
         return [];
     }
 
-    public function darPresenca(): void
+    public function markAttendance(): void
     {
-        //
+        // 
     }
 }
