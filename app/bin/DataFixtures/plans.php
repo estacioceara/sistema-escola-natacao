@@ -8,7 +8,7 @@ return [
     [
         'name' => 'Plano Básico',
         'value' => 99.89,
-        'status' => 'teste',
+        'status' => EducationalPlanStatusEnum::ACTIVE,
     ],
     [
         'name' => 'Plano Premium',
