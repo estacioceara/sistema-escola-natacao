@@ -13,6 +13,6 @@ abstract class AbstractService
 
     public function __construct()
     {
-        $this->entityManager = (new DatabaseConnection())->getEntityManager();
+        //$this->entityManager = (new DatabaseConnection())->getEntityManager();
     }
 }
