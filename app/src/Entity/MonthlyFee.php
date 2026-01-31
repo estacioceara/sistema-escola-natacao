@@ -1,12 +1,27 @@
 <?php
 
+declare(strict_types=1);
+namespace App\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use DateTime;
+
+#[ORM\Entity]
 class MonthlyFee
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column()]
+    private int $id;
+    #[ORM\Column()]
     private float $value;
     private Aluno $student;
-    private bool $paid;
+    #[ORM\Column(options: ['default' => false])]
+    private bool $paid = false;
+    #[ORM\Column()]
     private DateTime $dueDate;
+    #[ORM\Column(nullable: true)]
     private ?DateTime $paymentDate;
+    #[ORM\Column(length: 20)]
     private string $billingPeriod;
 
     public function __construct(

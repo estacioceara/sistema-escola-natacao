@@ -6,20 +6,30 @@ namespace App\Entity;
 
 use App\Enum\EducationalPlanStatusEnum;
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 class EducationalPlan
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private int $id;
 
+    #[ORM\Column]
     private string $name;
 
+    #[ORM\Column]
     private float $value;
 
+    #[ORM\Column(type: Types::ENUM)]
     private EducationalPlanStatusEnum $status;
 
+    #[ORM\Column(type: 'date')]
     private DateTime $createdAt;
 
+    #[ORM\Column(type: 'date')]
     private DateTime $updatedAt;
 
     public function preUpdate(): void
