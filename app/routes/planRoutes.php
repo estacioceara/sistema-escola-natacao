@@ -6,6 +6,7 @@ use App\Controller\EducationalPlanController;
 
 return [
     '/planos' => [EducationalPlanController::class, 'list'],
+    '/api/planos' => [EducationalPlanController::class, 'getAll'],
     '/planos/adicionar' => [EducationalPlanController::class, 'add'],
     '/planos/editar' => [EducationalPlanController::class, 'edit'],
     '/planos/view' => [EducationalPlanController::class, 'view'],

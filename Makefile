@@ -13,6 +13,18 @@ db:
 composer_install:
 	docker compose exec -T php bash -c "composer install"
 
+migrate:
+	docker compose exec -T php bash -c "php bin/doctrine orm:schema-tool:update --force"
+
+fixtures:
+	docker compose exec -T php bash -c "php bin/fixtures"
+
+setup:
+	up
+	composer_install
+	migrate
+	fixtures
+
 down:
 	docker compose down
 

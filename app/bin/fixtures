@@ -1,13 +1,17 @@
 #!/usr/bin/env php
 <?php
 
+use App\Entity\Address;
 use App\Entity\EducationalPlan;
 use App\Entity\MonthlyFee;
 use App\Entity\Student;
+use App\Entity\Teacher;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 $entityManager = require dirname(__DIR__) . '/doctrine.php';
+
+
 
 $plans = include 'DataFixtures/plans.php';
 
@@ -24,8 +28,6 @@ foreach ($plans as $data) {
 }
 
 $students = include 'DataFixtures/student.php';
-
-
 
 foreach ($students as $data) {
     $student = new Student(
@@ -66,6 +68,25 @@ foreach ($monthlyfees as $data) {
 
     $entityManager->persist($fee);
     echo "Inserindo novo mensalidade para testes..." . PHP_EOL;
+}
+
+$teachers = include 'DataFixtures/teachers.php';
+
+foreach ($teachers as $data) {
+    $teacher = new Teacher();
+
+    $teacher->setName($data['name']);
+    $teacher->setShifts($data['shifts']);
+    $teacher->setCpf($data['cpf']);
+    $teacher->setCategory($data['category']);
+
+    $address = new Address();
+    $address->fill($data['address']); //preencher
+
+    $teacher->setAddress($address);
+
+    $entityManager->persist($teacher);
+    echo "Inserindo novo professor para testes..." . PHP_EOL;
 }
 
 

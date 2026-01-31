@@ -31,9 +31,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nome do Plano</th>
-                            <th>Data Início</th>
-                            <th>Data Fim</th>
-                            <th>Status</th>
+                            <th>Valor</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
@@ -41,24 +39,11 @@
                         <?php foreach ($plans as $plan): ?>
                             <tr>
                                 <td><?= htmlspecialchars($plan->getId()) ?></td>
-                                <td><?= htmlspecialchars($plan->getAdvertiserId()) ?></td>
                                 <td class="fw-semibold text-primary">
                                     <?= htmlspecialchars($plan->getName()) ?>
                                 </td>
-                                <td><?= $plan->getStartDate() ? $plan->getStartDate()->format('Y-m-d') : '-' ?></td>
-                                <td><?= $plan->getEndDate() ? $plan->getEndDate()->format('Y-m-d') : '-' ?></td>
-                                <td>
-                                    <?php
-                                    $status = $plan->getStatus()->value;
-                                    [$statusClass, $statusText] = match ($status) {
-                                        'ACTIVE' => ['badge-success', 'Ativo'],
-                                        'EXPIRED' => ['badge-warning', 'Expirado'],
-                                        'CANCELED' => ['badge-danger', 'Cancelado'],
-                                        default => ['badge-secondary', $status]
-                                    };
-                                    ?>
-                                    <span class="badge <?= $statusClass ?>"><?= $statusText ?></span>
-                                </td>
+                                <td><?= $plan->getValue() ?></td>
+
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Ações do plano">
                                         <a href="/planos/view?id=<?= urlencode($plan->getId()) ?>" class="btn btn-sm btn-info d-flex align-items-center gap-1">

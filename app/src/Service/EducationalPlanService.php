@@ -17,12 +17,13 @@ class EducationalPlanService extends AbstractService
     public function __construct()
     {
         parent::__construct();
-//        $this->repository = $this->entityManager->getRepository(EducationalPlan::class);
+        // ei parceira, pega lá o repositorio da entidade Plan
+        $this->repository = $this->entityManager->getRepository(EducationalPlan::class);
     }
 
     public function findAll(): array
     {
-        return [];
+        // é o mesmo que um "SELECT * FROM EducationPlan
         return $this->repository->findAll();
     }
 

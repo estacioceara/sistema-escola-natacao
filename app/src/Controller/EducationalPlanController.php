@@ -23,9 +23,26 @@ final class EducationalPlanController extends AbstractController
     public function list(): void
     {
         $plans = $this->service->findAll();
+
         $this->render(self::VIEW_LIST, [
             'plans' => $plans,
         ]);
+    }
+
+    public function getAll(): void
+    {
+        $plans = array_map(function ($dado) {
+            return [
+                'id' => $dado->getId(),
+                'nome' => $dado->getName(),
+                'valor' => $dado->getValue(),
+            ];
+        }, $this->service->findAll());
+
+        header('Content-type: application/json');
+
+        echo json_encode($plans);
+        exit;
     }
 
     public function add(): void

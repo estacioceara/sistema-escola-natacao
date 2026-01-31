@@ -30,7 +30,7 @@ class Address
     #[ORM\Column(nullable: true, length: 2)]
     private ?string $state = null;
 
-    #[ORM\Column(nullable: true, length: 7)]
+    #[ORM\Column(nullable: true, length: 8)]
     private ?string $zipCode = null;
 
     public function getStreet(): ?string
@@ -101,5 +101,15 @@ class Address
     public function setZipCode(string $zipCode): void
     {
         $this->zipCode = $zipCode;
+    }
+
+    public function fill(array $data): void
+    {
+        $this->street = $data['street'] ?? null;
+        $this->number = (string) ($data['number'] ?? null);
+        $this->city = $data['city'] ?? null;
+        $this->state = $data['state'] ?? null;
+        $this->neighborhood = $data['neighborhood'] ?? null;
+        $this->zipCode = $data['zipcode'] ?? null;
     }
 }
