@@ -8,34 +8,24 @@ use App\Enum\UserStatusEnum;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 class User
 {
-    #[ORM\Id] #[ORM\GeneratedValue] #[ORM\Column]
-    private int $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+
     private string $name;
 
-    #[ORM\Column(length: 100, unique: true)]
     private string $email;
 
-    #[ORM\Column]
     private string $password;
 
-    #[ORM\Column(length: 20)]
     private string $document;
 
-    #[ORM\Column(length: 20)]
     private string $phone;
 
-    #[ORM\Column(enumType: UserStatusEnum::class)]
     private UserStatusEnum $status;
 
-    #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
     private DateTime $updatedAt;
 
     public function __construct(

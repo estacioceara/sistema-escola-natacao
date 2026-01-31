@@ -8,41 +8,25 @@ use App\Enum\EducationalPlanStatusEnum;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
-#[ORM\HasLifecycleCallbacks]
 class EducationalPlan
 {
-    #[ORM\Id] #[ORM\Column] #[ORM\GeneratedValue]
     private int $id;
 
-    #[ORM\Column]
-    private int $advertiserId;
-
-    #[ORM\Column]
     private string $name;
 
-    #[ORM\Column]
-    private DateTime $startDate;
+    private float $value;
 
-    #[ORM\Column(nullable: true)]
-    private ?DateTime $endDate = null;
-
-    #[ORM\Column(length: 15)]
     private EducationalPlanStatusEnum $status;
 
-    #[ORM\Column]
     private DateTime $createdAt;
 
-    #[ORM\Column]
     private DateTime $updatedAt;
 
-    #[ORM\PreUpdate]
     public function preUpdate(): void
     {
         $this->updatedAt = new DateTime();
     }
 
-    #[ORM\PrePersist]
     public function prePersist(): void
     {
         $this->createdAt = new DateTime();
@@ -59,16 +43,6 @@ class EducationalPlan
         $this->id = $id;
     }
 
-    public function getAdvertiserId(): int
-    {
-        return $this->advertiserId;
-    }
-
-    public function setAdvertiserId(int $advertiserId): void
-    {
-        $this->advertiserId = $advertiserId;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -79,25 +53,7 @@ class EducationalPlan
         $this->name = $name;
     }
 
-    public function getStartDate(): DateTime
-    {
-        return $this->startDate;
-    }
 
-    public function setStartDate(DateTime $startDate): void
-    {
-        $this->startDate = $startDate;
-    }
-
-    public function getEndDate(): ?DateTime
-    {
-        return $this->endDate;
-    }
-
-    public function setEndDate(?DateTime $endDate): void
-    {
-        $this->endDate = $endDate;
-    }
 
     public function getStatus(): EducationalPlanStatusEnum
     {
@@ -129,15 +85,13 @@ class EducationalPlan
         $this->updatedAt = $updatedAt;
     }
 
-    public function isActive(): bool
+    public function getValue(): float
     {
-        return EducationalPlanStatusEnum::ACTIVE === $this->status
-            && (!$this->endDate || $this->endDate > new DateTime());
+        return $this->value;
     }
 
-    public function isExpired(): bool
+    public function setValue(float $value): void
     {
-        return EducationalPlanStatusEnum::EXPIRED === $this->status
-            || (null !== $this->endDate && $this->endDate < new DateTime());
+        $this->value = $value;
     }
 }
