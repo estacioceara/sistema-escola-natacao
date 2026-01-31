@@ -7,7 +7,11 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
+<<<<<<< HEAD
       - ./site:/var/www
+=======
+      - ./app:/var/www
+>>>>>>> origin/main
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - setup-swim_network
@@ -23,15 +27,46 @@ services:
       - '8080:80'
       - '443:443'
     volumes:
+<<<<<<< HEAD
       - ./site:/var/www
+=======
+      - ./app:/var/www
+>>>>>>> origin/main
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - setup-swim_network
 
+<<<<<<< HEAD
+=======
+  mysql:
+    container_name: setup-swim_mysql
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    tty: true
+    volumes:
+      - setup-swim_data:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - setup-swim_network
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: db_swim
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+
+>>>>>>> origin/main
 networks:
   setup-swim_network:
     driver: bridge
 
 volumes:
+<<<<<<< HEAD
   setup-data:
+=======
+  setup-swim_data:
+>>>>>>> origin/main
     driver: local
