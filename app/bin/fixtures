@@ -1,129 +1,24 @@
 #!/usr/bin/env php
 <?php
 
-use App\Entity\Address;
-use App\Entity\Category;
 use App\Entity\EducationalPlan;
-use App\Entity\Review;
-use App\Entity\ContactInformation;
-use App\Entity\User;
-use App\Entity\Advertisement;
-use Doctrine\ORM\EntityManagerInterface;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 $entityManager = require dirname(__DIR__) . '/doctrine.php';
 
-$categories = include 'DataFixtures/categories.php';
-$reviews = include 'DataFixtures/reviews.php';
-$addresses = include 'DataFixtures/addresses.php';
-$contactInformations = include 'DataFixtures/contactInformations.php';
-$advertisers = include 'DataFixtures/advertisers.php';
-$advertisements = include 'DataFixtures/advertisements.php';
-$advertiserPlans = include 'DataFixtures/advertiserPlans.php';
+$plans = include 'DataFixtures/plans.php';
 
-foreach ($categories as $data) {
-    $category = new Category();
-    $category->setName($data['name']);
-    $category->setDescription($data['description']);
-    $category->setUpdatedAt(new DateTime($data['updatedAt']));
-    $category->setCreatedAt(new DateTime($data['createdAt']));
+foreach ($plans as $data) {
+    $plan = new EducationalPlan();
+    $plan->setName($data['name']);
+    $plan->setValue($data['value']);
+    $plan->setStatus($data['status']);
+    $plan->setUpdatedAt(new DateTime());
+    $plan->setCreatedAt(new DateTime());
 
-    $entityManager->persist($category);
-    echo "Inserindo nova Categoria para testes..." . PHP_EOL;
-}
-$entityManager->flush();
-
-foreach ($reviews as $data) {
-    $review = new Review();
-    $review->setUserId($data['userId']);
-    $review->setAdvertisementId($data['advertisementId']);
-    $review->setRating($data['rating']);
-    $review->setComment($data['comment']);
-    $review->setCreatedAt(new DateTime($data['createdAt']));
-    $review->setUpdatedAt(new DateTime($data['updatedAt']));
-
-    $entityManager->persist($review);
-    echo "Inserindo nova Review para testes..." . PHP_EOL;
-}
-
-foreach ($addresses as $data) {
-    $address = new Address();
-    $address->setStreet($data['street']);
-    $address->setNumber($data['number']);
-    $address->setComplement($data['complement']);
-    $address->setNeighborhood($data['neighborhood']);
-    $address->setCity($data['city']);
-    $address->setState($data['state']);
-    $address->setZipCode($data['zipCode']);
-
-    $entityManager->persist($address); // INSERT INTO...
-    echo "Inserindo Novo Endereço para testes..." . PHP_EOL;
-}
-
-foreach ($contactInformations as $data) {
-    $contactInformation = new ContactInformation();
-    $contactInformation->setName($data["name"]);
-    $contactInformation->setPhone($data['phone']);
-    $contactInformation->setEmail($data['email']);
-    $contactInformation->setSocialMedia($data['socialMedia']);
-    $contactInformation->setCreatedAt(new DateTime($data['createdAt']));
-    $contactInformation->setUpdatedAt(new DateTime($data['updatedAt']));
-
-    $entityManager->persist($contactInformation); //INSERT INTO...
-    echo "Inserindo Nova Informação de Contato para testes..." . PHP_EOL;
-}
-
-$password = password_hash('123456', PASSWORD_BCRYPT);
-foreach ($advertisers as $data) {
-    $advertiser = new User($data['name'], $data['email'],$data['documento'],$data['phone']);
-    $advertiser->setPassword($password);
-    $advertiser->setStatus($data['status']);
-    $advertiser->setUpdatedAt(new DateTime($data['updatedAt']));
-    $advertiser->setCreatedAt(new DateTime($data['createdAt']));
-    $entityManager->persist($advertiser); //INSERT INTO...
-    echo "Inserindo Novo User para testes..." . PHP_EOL;
-}
-
-foreach ($advertisements as $data) {
-    $category = $entityManager
-        ->getRepository(Category::class)
-        ->find($data['categoryId']);
-
-    $advertisement = new Advertisement(
-        $data['title'],
-        $data['description'],
-        $data['price']
-    );
-    $advertisement->setCategory($category);
-    $advertisement->setStatus($data['status']);
-    $advertisement->setpublishedAt(new DateTime($data['updatedAt']));
-    $advertisement->setCreatedAt(new DateTime($data['createdAt']));
-    $advertisement->setUpdatedAt(new DateTime($data['updatedAt']));
-
-    $entityManager->persist($advertisement); //INSERT INTO...
-    echo "Inserindo Novo Advertisement para testes..." . PHP_EOL;
-}
-
-foreach ($advertiserPlans as $data) {
-    $advertiserPlan = new EducationalPlan();
-    $advertiserPlan->setName($data['name']);
-    $advertiserPlan->setAdvertiserId($data['advertiserId']);
-    $advertiserPlan->setStartDate(new DateTime($data['startDate']));
-    
-    // Tratar endDate que pode ser null
-    if ($data['endDate'] !== null) {
-        $advertiserPlan->setEndDate(new DateTime($data['endDate']));
-    } else {
-        $advertiserPlan->setEndDate(null);
-    }
-
-    $advertiserPlan->setStatus($data['status']);
-    $advertiserPlan->setCreatedAt(new DateTime($data['createdAt']));
-    $advertiserPlan->setUpdatedAt(new DateTime($data['updatedAt']));
-
-    $entityManager->persist($advertiserPlan); //INSERT INTO...
-    echo "Inserindo Novo Plano de Educação para testes..." . PHP_EOL;
+    $entityManager->persist($plan);
+    echo "Inserindo novo plano para testes..." . PHP_EOL;
 }
 
 $entityManager->flush();
