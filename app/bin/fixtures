@@ -2,6 +2,8 @@
 <?php
 
 use App\Entity\EducationalPlan;
+use App\Entity\MonthlyFee;
+use App\Entity\Student;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -20,5 +22,51 @@ foreach ($plans as $data) {
     $entityManager->persist($plan);
     echo "Inserindo novo plano para testes..." . PHP_EOL;
 }
+
+$students = include 'DataFixtures/student.php';
+
+
+
+foreach ($students as $data) {
+    $student = new Student(
+            $data['name'],
+            $data['birth'],
+            $data['cpf'],
+            $data['phone'],
+            $data['notes'],
+            new \App\Entity\Address(),
+            new \App\Entity\StudentResponsible()
+    );
+
+    //$student->setUpdatedAt(new DateTime());
+    //$student->setCreatedAt(new DateTime());
+
+    $entityManager->persist($student);
+    echo "Inserindo novo aluno para testes..." . PHP_EOL;
+}
+
+
+$entityManager->flush();
+
+$studentsAll = $entityManager->getRepository(Student::class)->findAll();
+
+$monthlyfees = include 'DataFixtures/monthlyfee.php';
+foreach ($monthlyfees as $data) {
+    $randomStudent = $studentsAll[array_rand($studentsAll)];
+    $fee = new MonthlyFee(
+            $data['value'],
+            $randomStudent,
+            $data['dueDate'],
+            $data['billingPeriod'],
+    );
+
+    $fee->setPaid($data['paid']);
+    //$student->setUpdatedAt(new DateTime());
+    //$student->setCreatedAt(new DateTime());
+
+    $entityManager->persist($fee);
+    echo "Inserindo novo mensalidade para testes..." . PHP_EOL;
+}
+
 
 $entityManager->flush();

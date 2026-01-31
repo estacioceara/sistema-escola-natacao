@@ -14,7 +14,7 @@ class MonthlyFee
     private int $id;
     #[ORM\Column()]
     private float $value;
-    private Aluno $student;
+    private Student $student;
     #[ORM\Column(options: ['default' => false])]
     private bool $paid = false;
     #[ORM\Column()]
@@ -26,7 +26,7 @@ class MonthlyFee
 
     public function __construct(
         float $value,
-        Aluno $student,
+        Student $student,
         DateTime $dueDate,
         string $billingPeriod
     ) {
@@ -74,6 +74,10 @@ class MonthlyFee
     {
         return $this->paid;
     }
+    public function setPaid(bool $value): void
+    {
+        $this->paid = $value;
+    }
 
     public function getDueDate(): DateTime
     {
@@ -89,4 +93,26 @@ class MonthlyFee
     {
         return $this->billingPeriod;
     }
+
+    public function getStudent(): Student
+    {
+        return $this->student;
+    }
+
+    public function setStudent(Student $student): void
+    {
+        $this->student = $student;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+
 }
