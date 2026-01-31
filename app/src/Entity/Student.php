@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace App\Entity;
+
 class Student
 {
     private string $name;
@@ -9,8 +13,7 @@ class Student
     private string $notes;
 
     private Address $address;
-    private Guardian $guardian;
-    private Enrollment $enrollment;
+    private StudentResponsible $studentResponsible;
 
     public function __construct(
         string $name,
@@ -19,8 +22,7 @@ class Student
         string $phone,
         string $notes,
         Address $address,
-        Guardian $guardian,
-        Enrollment $enrollment
+        StudentResponsible $studentResponsible,
     ) {
         $this->name = $name;
         $this->birthDate = $birthDate;
@@ -28,8 +30,7 @@ class Student
         $this->phone = $phone;
         $this->notes = $notes;
         $this->address = $address;
-        $this->guardian = $guardian;
-        $this->enrollment = $enrollment;
+        $this->studentResponsible = $studentResponsible;
     }
 
     public function getName(): string
@@ -92,24 +93,14 @@ class Student
         $this->address = $address;
     }
 
-    public function getGuardian(): Guardian
+    public function getStudentResponsible(): StudentResponsible
     {
-        return $this->guardian;
+        return $this->studentResponsible;
     }
 
-    public function setGuardian(Guardian $guardian): void
+    public function setStudentResponsible(StudentResponsible $studentResponsible): void
     {
-        $this->guardian = $guardian;
-    }
-
-    public function getEnrollment(): Enrollment
-    {
-        return $this->enrollment;
-    }
-
-    public function setEnrollment(Enrollment $enrollment): void
-    {
-        $this->enrollment = $enrollment;
+        $this->studentResponsible = $studentResponsible;
     }
 
     public function enroll(): void
