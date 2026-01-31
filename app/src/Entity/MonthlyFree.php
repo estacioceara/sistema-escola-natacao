@@ -1,77 +1,77 @@
 <?php
 
-class Mensalidade
+class MonthlyFree
 {
-    private float $valor;
-    private Aluno $aluno;
-    private bool $pago;
-    private DateTime $dataVencimento;
-    private ?DateTime $dataPagamento;
-    private string $competencia;
+    private float $value;
+    private Aluno $student;
+    private bool $paid;
+    private DateTime $dueDate;
+    private ?DateTime $paymentDate;
+    private string $billingPeriod;
 
     public function __construct(
-        float $valor,
-        Aluno $aluno,
-        DateTime $dataVencimento,
-        string $competencia
+        float $value,
+        Aluno $student,
+        DateTime $dueDate,
+        string $billingPeriod
     ) {
-        $this->valor = $valor;
-        $this->aluno = $aluno;
-        $this->dataVencimento = $dataVencimento;
-        $this->competencia = $competencia;
-        $this->pago = false;
-        $this->dataPagamento = null;
+        $this->value = $value;
+        $this->student = $student;
+        $this->dueDate = $dueDate;
+        $this->billingPeriod = $billingPeriod;
+        $this->paid = false;
+        $this->paymentDate = null;
     }
 
-    public function gerarBoleto(): void
+    public function generatePaymentSlip(): void
     {
         // Lógica para geração do boleto
-        echo "Boleto gerado para o aluno {$this->aluno->getNome()} no valor de {$this->valor}";
+        echo "Boleto gerado para o aluno {$this->student->getName()} no valor de {$this->value}";
     }
 
-    public function efetuarPagamento(): void
+    public function makePayment(): void
     {
-        $this->pago = true;
-        $this->dataPagamento = new DateTime();
+        $this->paid = true;
+        $this->paymentDate = new DateTime();
     }
 
-    public function multar(float $percentual): void
+    public function applyFine(float $percent): void
     {
-        if (!$this->pago && new DateTime() > $this->dataVencimento) {
-            $this->valor += $this->valor * ($percentual / 100);
+        if (!$this->paid && new DateTime() > $this->dueDate) {
+            $this->value += $this->value * ($percent / 100);
         }
     }
 
-    public function aplicarDesconto(float $percentual): void
+    public function aplicarDesconto(float $percent): void
     {
-        if (!$this->pago) {
-            $this->valor -= $this->valor * ($percentual / 100);
+        if (!$this->paid) {
+            $this->value -= $this->value * ($percent / 100);
         }
     }
 
     // Getters (opcional, mas recomendado)
-    public function getValor(): float
+    public function getValue(): float
     {
-        return $this->valor;
+        return $this->value;
     }
 
-    public function isPago(): bool
+    public function isPaid(): bool
     {
-        return $this->pago;
+        return $this->paid;
     }
 
-    public function getDataVencimento(): DateTime
+    public function getDueDate(): DateTime
     {
-        return $this->dataVencimento;
+        return $this->dueDate;
     }
 
-    public function getDataPagamento(): ?DateTime
+    public function getPaymentDate(): ?DateTime
     {
-        return $this->dataPagamento;
+        return $this->paymentDate;
     }
 
-    public function getCompetencia(): string
+    public function getBillingPeriod(): string
     {
-        return $this->competencia;
+        return $this->billingPeriod;
     }
 }
