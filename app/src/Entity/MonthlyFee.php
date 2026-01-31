@@ -1,6 +1,6 @@
 <?php
 
-class MonthlyFree
+class MonthlyFee
 {
     private float $value;
     private Aluno $student;
@@ -42,7 +42,7 @@ class MonthlyFree
         }
     }
 
-    public function aplicarDesconto(float $percent): void
+    public function applyDiscount(float $percent): void
     {
         if (!$this->paid) {
             $this->value -= $this->value * ($percent / 100);
