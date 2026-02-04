@@ -100,7 +100,8 @@ class Address
 
     public function setZipCode(string $zipCode): void
     {
-        $this->zipCode = $zipCode;
+        // Remove tudo que não seja número (hífen, espaços, etc.)
+        $this->zipCode = preg_replace('/\D/', '', $zipCode);
     }
 
     public function fill(array $data): void
@@ -110,6 +111,9 @@ class Address
         $this->city = $data['city'] ?? null;
         $this->state = $data['state'] ?? null;
         $this->neighborhood = $data['neighborhood'] ?? null;
-        $this->zipCode = $data['zipcode'] ?? null;
+        
+        // Sanitiza o CEP removendo hífen e outros caracteres não numéricos
+        $zipCode = $data['zipcode'] ?? null;
+        $this->zipCode = $zipCode ? preg_replace('/\D/', '', $zipCode) : null;
     }
 }

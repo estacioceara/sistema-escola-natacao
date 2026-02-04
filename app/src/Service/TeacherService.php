@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Teacher;
+use App\Entity\Address;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 
@@ -56,6 +57,28 @@ class TeacherService extends AbstractService
 
     public function create(Teacher $teacher): void
     {
+        $this->entityManager->persist($teacher);
+        $this->entityManager->flush();
+    }
+
+    public function createFromForm(array $data): void
+    {
+        // Criar endereço
+        $address = new Address();
+        $address->fill($data);
+
+        // Criar professor
+        $teacher = new Teacher();
+        $teacher->setName(trim($data['name']));
+        $teacher->setCpf(!empty($data['cpf']) ? trim($data['cpf']) : null);
+        $teacher->setCategory(trim($data['category']));
+        $teacher->setAddress($address);
+        
+        // Processar turnos (checkboxes)
+        $shifts = isset($data['shifts']) && is_array($data['shifts']) ? $data['shifts'] : [];
+        $teacher->setShifts($shifts);
+
+        $this->entityManager->persist($address);
         $this->entityManager->persist($teacher);
         $this->entityManager->flush();
     }

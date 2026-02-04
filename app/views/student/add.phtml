@@ -1,0 +1,372 @@
+<section class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 900px;">
+        <div class="card-body p-4">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-primary d-flex align-items-center justify-content-center gap-2">
+                    <span class="material-icons">add_circle</span> Adicionar Novo Aluno
+                </h1>
+                <p class="text-secondary">Preencha os dados abaixo para cadastrar um novo aluno</p>
+            </div>
+
+            <!-- Formulário -->
+            <form action="/alunos/adicionar" method="POST" class="needs-validation" novalidate>
+                <div class="row g-3">
+                    <!-- Dados Pessoais -->
+                    <div class="col-12">
+                        <h5 class="text-primary border-bottom pb-2 mb-3">
+                            <span class="material-icons align-middle">person</span> Dados Pessoais
+                        </h5>
+                    </div>
+
+                    <!-- Nome -->
+                    <div class="col-12 col-md-6">
+                        <label for="name" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">badge</span>
+                            Nome Completo
+                        </label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               required placeholder="Ex: João Silva">
+                        <div class="invalid-feedback">
+                            Por favor, informe o nome do aluno.
+                        </div>
+                    </div>
+
+                    <!-- Data de Nascimento -->
+                    <div class="col-12 col-md-6">
+                        <label for="birthDate" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">cake</span>
+                            Data de Nascimento
+                        </label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                        <div class="invalid-feedback">
+                            Por favor, informe a data de nascimento.
+                        </div>
+                    </div>
+
+                    <!-- CPF -->
+                    <div class="col-12 col-md-6">
+                        <label for="cpf" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">credit_card</span>
+                            CPF (Opcional)
+                        </label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" 
+                               placeholder="000.000.000-00" maxlength="14">
+                        <div class="form-text">
+                            Deixe em branco se o aluno não possuir CPF.
+                        </div>
+                    </div>
+
+                    <!-- Telefone -->
+                    <div class="col-12 col-md-6">
+                        <label for="phone" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">phone</span>
+                            Telefone
+                        </label>
+                        <input type="tel" class="form-control" id="phone" name="phone" 
+                               required placeholder="(00) 00000-0000">
+                        <div class="invalid-feedback">
+                            Por favor, informe o telefone.
+                        </div>
+                    </div>
+
+                    <!-- Observações -->
+                    <div class="col-12">
+                        <label for="notes" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">notes</span>
+                            Observações
+                        </label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" 
+                                  required placeholder="Informações adicionais sobre o aluno"></textarea>
+                        <div class="invalid-feedback">
+                            Por favor, adicione observações sobre o aluno.
+                        </div>
+                    </div>
+
+                    <!-- Endereço -->
+                    <div class="col-12 mt-4">
+                        <h5 class="text-primary border-bottom pb-2 mb-3">
+                            <span class="material-icons align-middle">home</span> Endereço
+                        </h5>
+                    </div>
+
+                    <!-- CEP -->
+                    <div class="col-12 col-md-4">
+                        <label for="zipcode" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">location_on</span>
+                            CEP
+                        </label>
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" 
+                               placeholder="00000-000" maxlength="9">
+                    </div>
+
+                    <!-- Rua -->
+                    <div class="col-12 col-md-8">
+                        <label for="street" class="form-label fw-semibold">
+                            Logradouro
+                        </label>
+                        <input type="text" class="form-control" id="street" name="street" 
+                               placeholder="Rua, Avenida, etc.">
+                    </div>
+
+                    <!-- Número -->
+                    <div class="col-12 col-md-3">
+                        <label for="number" class="form-label fw-semibold">
+                            Número
+                        </label>
+                        <input type="text" class="form-control" id="number" name="number" 
+                               placeholder="123">
+                    </div>
+
+                    <!-- Bairro -->
+                    <div class="col-12 col-md-5">
+                        <label for="neighborhood" class="form-label fw-semibold">
+                            Bairro
+                        </label>
+                        <input type="text" class="form-control" id="neighborhood" name="neighborhood" 
+                               placeholder="Centro">
+                    </div>
+
+                    <!-- Cidade -->
+                    <div class="col-12 col-md-7">
+                        <label for="city" class="form-label fw-semibold">
+                            Cidade
+                        </label>
+                        <input type="text" class="form-control" id="city" name="city" 
+                               placeholder="São Paulo">
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="col-12 col-md-5">
+                        <label for="state" class="form-label fw-semibold">
+                            Estado
+                        </label>
+                        <select class="form-select" id="state" name="state">
+                            <option value="">Selecione</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+
+                    <!-- Dados do Responsável -->
+                    <div class="col-12 mt-4">
+                        <h5 class="text-primary border-bottom pb-2 mb-3">
+                            <span class="material-icons align-middle">supervisor_account</span> Responsável
+                        </h5>
+                    </div>
+
+                    <!-- Nome do Responsável -->
+                    <div class="col-12 col-md-6">
+                        <label for="responsibleName" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">account_circle</span>
+                            Nome do Responsável
+                        </label>
+                        <input type="text" class="form-control" id="responsibleName" name="responsibleName" 
+                               required placeholder="Ex: Maria Silva">
+                        <div class="invalid-feedback">
+                            Por favor, informe o nome do responsável.
+                        </div>
+                    </div>
+
+                    <!-- CPF do Responsável -->
+                    <div class="col-12 col-md-6">
+                        <label for="responsibleDocument" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">credit_card</span>
+                            CPF do Responsável
+                        </label>
+                        <input type="text" class="form-control" id="responsibleDocument" name="responsibleDocument" 
+                               required placeholder="000.000.000-00" maxlength="14">
+                        <div class="invalid-feedback">
+                            Por favor, informe o CPF do responsável.
+                        </div>
+                    </div>
+
+                    <!-- Telefone do Responsável -->
+                    <div class="col-12 col-md-6">
+                        <label for="responsiblePhone" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">phone</span>
+                            Telefone do Responsável
+                        </label>
+                        <input type="tel" class="form-control" id="responsiblePhone" name="responsiblePhone" 
+                               required placeholder="(00) 00000-0000">
+                        <div class="invalid-feedback">
+                            Por favor, informe o telefone do responsável.
+                        </div>
+                    </div>
+
+                    <!-- Email do Responsável -->
+                    <div class="col-12 col-md-6">
+                        <label for="responsibleEmail" class="form-label fw-semibold">
+                            <span class="material-icons text-primary" style="font-size:1.1rem;">email</span>
+                            Email do Responsável
+                        </label>
+                        <input type="email" class="form-control" id="responsibleEmail" name="responsibleEmail" 
+                               required placeholder="email@exemplo.com">
+                        <div class="invalid-feedback">
+                            Por favor, informe o email do responsável.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de ação -->
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                    <a href="/alunos" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+                        <span class="material-icons">arrow_back</span>
+                        Voltar
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button type="reset" class="btn btn-outline-warning d-flex align-items-center gap-2">
+                            <span class="material-icons">refresh</span>
+                            Limpar
+                        </button>
+                        <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
+                            <span class="material-icons">save</span>
+                            Salvar Aluno
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+// Validação do formulário
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+
+// Máscara de CPF
+document.getElementById('cpf').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        e.target.value = value;
+    }
+});
+
+// Máscara de CPF do Responsável
+document.getElementById('responsibleDocument').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        e.target.value = value;
+    }
+});
+
+// Máscara de Telefone
+function maskPhone(input) {
+    input.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length <= 11) {
+            value = value.replace(/(\d{2})(\d)/, '($1) $2');
+            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            e.target.value = value;
+        }
+    });
+}
+
+maskPhone(document.getElementById('phone'));
+maskPhone(document.getElementById('responsiblePhone'));
+
+// Máscara de CEP
+document.getElementById('zipcode').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 8) {
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+        e.target.value = value;
+    }
+});
+
+// Definir data máxima como hoje para data de nascimento
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('birthDate').max = today;
+});
+</script>
+
+<style>
+.form-label {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    border-radius: 0.5rem;
+    border: 1.5px solid var(--login-input-border);
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(34, 87, 122, 0.25);
+}
+
+.form-text {
+    color: var(--secondary);
+    font-size: 0.875rem;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+@media (max-width: 767.98px) {
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .d-flex.gap-2 {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>

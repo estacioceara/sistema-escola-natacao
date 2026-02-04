@@ -21,10 +21,16 @@ class EducationalPlan
     private string $name;
 
     #[ORM\Column]
-    private float $value;
+    private float $value = 0.0;
 
     #[ORM\Column(type: Types::ENUM)]
     private EducationalPlanStatusEnum $status;
+
+    #[ORM\Column(type: 'date')]
+    private DateTime $startDate;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?DateTime $endDate = null;
 
     #[ORM\Column(type: 'date')]
     private DateTime $createdAt;
@@ -103,5 +109,25 @@ class EducationalPlan
     public function setValue(float $value): void
     {
         $this->value = $value;
+    }
+
+    public function getStartDate(): DateTime
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function getEndDate(): ?DateTime
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
     }
 }

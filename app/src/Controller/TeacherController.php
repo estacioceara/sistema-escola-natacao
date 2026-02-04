@@ -54,8 +54,7 @@ final class TeacherController extends AbstractController
             return;
         }
 
-        // TODO: Implementar createFromForm no TeacherService
-        // $this->service->createFromForm($_POST);
+        $this->service->createFromForm($_POST);
         $this->redirectToURL('/professores');
     }
 

@@ -51,10 +51,10 @@ class Teacher
         return $this->cpf;
     }
 
-    public function setCpf(?string $cpf): self
+    public function setCpf(?string $cpf): void
     {
-        $this->cpf = $cpf;
-        return $this;
+        // Remove pontos, traços e outros caracteres não numéricos
+        $this->cpf = $cpf ? preg_replace('/\D/', '', $cpf) : null;
     }
 
     public function getCategory(): string

@@ -54,8 +54,7 @@ final class StudentController extends AbstractController
             return;
         }
 
-        // TODO: Implementar createFromForm no StudentService
-        // $this->service->createFromForm($_POST);
+        $this->service->createFromForm($_POST);
         $this->redirectToURL('/alunos');
     }
 
