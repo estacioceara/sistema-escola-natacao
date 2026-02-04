@@ -23,6 +23,8 @@ $routes = [
     ...routes('user'),
     ...routes('auth'),
     ...routes('plan'),
+    ...routes('student'),
+    ...routes('teacher'),
 ];
 
 if (false === isset($routes[$url])) {
