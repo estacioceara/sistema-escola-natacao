@@ -65,7 +65,22 @@ final class StudentController extends AbstractController
 
     public function view(): void
     {
-        $this->render(self::VIEW_VIEW);
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        
+        if ($id === 0) {
+            $this->redirectToURL('/alunos');
+            return;
+        }
+
+        try {
+            $student = $this->service->find($id);
+            
+            $this->render(self::VIEW_VIEW, [
+                'student' => $student,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            $this->redirectToURL('/alunos');
+        }
     }
 
     public function remove(): void

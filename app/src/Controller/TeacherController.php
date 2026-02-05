@@ -65,7 +65,22 @@ final class TeacherController extends AbstractController
 
     public function view(): void
     {
-        $this->render(self::VIEW_VIEW);
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        
+        if ($id === 0) {
+            $this->redirectToURL('/professores');
+            return;
+        }
+
+        try {
+            $teacher = $this->service->find($id);
+            
+            $this->render(self::VIEW_VIEW, [
+                'teacher' => $teacher,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            $this->redirectToURL('/professores');
+        }
     }
 
     public function remove(): void

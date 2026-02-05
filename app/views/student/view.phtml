@@ -1,0 +1,211 @@
+<?php
+// Preparar dados para exibição
+$address = $student->getAddress();
+$responsible = $student->getStudentResponsible();
+
+// Formatar CPF para exibição (adicionar pontos e traço)
+$cpfFormatted = $student->getCpf();
+if ($cpfFormatted && strlen($cpfFormatted) === 11) {
+    $cpfFormatted = substr($cpfFormatted, 0, 3) . '.' . 
+                    substr($cpfFormatted, 3, 3) . '.' . 
+                    substr($cpfFormatted, 6, 3) . '-' . 
+                    substr($cpfFormatted, 9, 2);
+}
+
+// Formatar CEP para exibição
+$cepFormatted = $address->getZipCode();
+if ($cepFormatted && strlen($cepFormatted) === 8) {
+    $cepFormatted = substr($cepFormatted, 0, 5) . '-' . substr($cepFormatted, 5, 3);
+}
+
+// Formatar data de nascimento
+$birthDateFormatted = $student->getBirthDate()->format('d/m/Y');
+
+// Calcular idade
+$hoje = new DateTime();
+$idade = $hoje->diff($student->getBirthDate())->y;
+?>
+
+<section class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 900px;">
+        <div class="card-body p-4">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-primary d-flex align-items-center justify-content-center gap-2">
+                    <span class="material-icons">person</span> Detalhes do Aluno
+                </h1>
+                <p class="text-secondary">Informações completas do cadastro</p>
+            </div>
+
+            <!-- Dados Pessoais -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">badge</span> Dados Pessoais
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Nome Completo</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($student->getName()) ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label class="form-label fw-semibold text-muted">Data de Nascimento</label>
+                        <p class="form-control-plaintext border-bottom"><?= $birthDateFormatted ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label class="form-label fw-semibold text-muted">Idade</label>
+                        <p class="form-control-plaintext border-bottom"><?= $idade ?> anos</p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">CPF</label>
+                        <p class="form-control-plaintext border-bottom"><?= $cpfFormatted ?: 'Não informado' ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Telefone</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($student->getPhone()) ?></p>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-muted">Observações</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($student->getNotes()) ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">home</span> Endereço
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-muted">CEP</label>
+                        <p class="form-control-plaintext border-bottom"><?= $cepFormatted ?: 'Não informado' ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-8">
+                        <label class="form-label fw-semibold text-muted">Logradouro</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($address->getStreet() ?: 'Não informado') ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label class="form-label fw-semibold text-muted">Número</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($address->getNumber() ?: 'S/N') ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-5">
+                        <label class="form-label fw-semibold text-muted">Bairro</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($address->getNeighborhood() ?: 'Não informado') ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-7">
+                        <label class="form-label fw-semibold text-muted">Cidade</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($address->getCity() ?: 'Não informado') ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-5">
+                        <label class="form-label fw-semibold text-muted">Estado</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($address->getState() ?: 'Não informado') ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados do Responsável -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">supervisor_account</span> Responsável
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Nome do Responsável</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($responsible->getName()) ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">CPF do Responsável</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($responsible->getDocument()) ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Telefone do Responsável</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($responsible->getPhone()) ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Email do Responsável</label>
+                        <p class="form-control-plaintext border-bottom"><?= htmlspecialchars($responsible->getEmail()) ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <a href="/alunos" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+                    <span class="material-icons">arrow_back</span>
+                    Voltar
+                </a>
+                <div class="d-flex gap-2">
+                    <a href="/alunos/editar?id=<?= $student->getId() ?>" class="btn btn-warning d-flex align-items-center gap-2">
+                        <span class="material-icons">edit</span>
+                        Editar
+                    </a>
+                    <a href="/alunos/excluir?id=<?= $student->getId() ?>" 
+                       class="btn btn-danger d-flex align-items-center gap-2"
+                       onclick="return confirm('Tem certeza que deseja excluir este aluno?')">
+                        <span class="material-icons">delete</span>
+                        Excluir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.form-label {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.form-control-plaintext {
+    padding: 0.5rem 0;
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+@media (max-width: 767.98px) {
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .d-flex.gap-2 {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
