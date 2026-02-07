@@ -319,6 +319,51 @@ document.getElementById('zipcode').addEventListener('input', function(e) {
     }
 });
 
+// Função para buscar CEP via ViaCEP API
+async function buscaCEP(cep) {
+    // Remove qualquer caractere que não seja número
+    cep = cep.replace(/\D/g, '');
+    
+    // Verifica se o CEP tem 8 dígitos
+    if (cep.length !== 8) {
+        alert('CEP deve conter 8 dígitos.');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+        
+        if (data.erro) {
+            alert('CEP não encontrado!');
+            return;
+        }
+        
+        // Preenche os campos do endereço
+        document.getElementById('street').value = data.logradouro || '';
+        document.getElementById('neighborhood').value = data.bairro || '';
+        document.getElementById('city').value = data.localidade || '';
+        document.getElementById('state').value = data.uf || '';
+        
+        // Marcar os campos como preenchidos para validação
+        document.getElementById('street').classList.remove('is-invalid');
+        document.getElementById('street').classList.add('is-valid');
+        
+    } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        alert('Erro ao buscar CEP. Tente novamente mais tarde.');
+    }
+}
+
+// Adiciona evento de blur no campo CEP para buscar endereço automaticamente
+const cepField = document.getElementById('zipcode');
+cepField.addEventListener('blur', function() {
+    const cepValue = cepField.value.replace(/[-\s]/g, '');
+    if (cepValue.length === 8) {
+        buscaCEP(cepValue);
+    }
+});
+
 // Definir data máxima como hoje para data de nascimento
 document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
