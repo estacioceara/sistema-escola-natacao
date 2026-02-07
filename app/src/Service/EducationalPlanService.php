@@ -67,11 +67,14 @@ class EducationalPlanService extends AbstractService
     public function createFromForm(array $data): void
     {
         $plan = new EducationalPlan();
-        $plan->setAdvertiserId(random_int(1, 1000));
         $plan->setName(trim($data['name']));
         $plan->setStartDate(new DateTime($data['startDate']));
         $plan->setStatus(EducationalPlanStatusEnum::from($data['status']));
         $plan->setEndDate(!empty($data['endDate']) ? new DateTime($data['endDate']) : null);
+        
+        // Definir datas de criação e atualização
+        $plan->setCreatedAt(new DateTime());
+        $plan->setUpdatedAt(new DateTime());
 
         $this->entityManager->persist($plan);
         $this->entityManager->flush();

@@ -1,0 +1,215 @@
+<?php
+// Preparar dados para exibição
+use App\Enum\EducationalPlanStatusEnum;
+
+// Formatar datas
+$startDateFormatted = $plan->getStartDate()->format('d/m/Y');
+$endDateFormatted = $plan->getEndDate() ? $plan->getEndDate()->format('d/m/Y') : null;
+$createdAtFormatted = $plan->getCreatedAt()->format('d/m/Y H:i');
+$updatedAtFormatted = $plan->getUpdatedAt()->format('d/m/Y H:i');
+
+// Formatar valor monetário
+$valueFormatted = 'R$ ' . number_format($plan->getValue(), 2, ',', '.');
+
+// Preparar status com cor
+$status = $plan->getStatus();
+$statusLabel = match($status) {
+    EducationalPlanStatusEnum::ACTIVE => 'Ativo',
+    EducationalPlanStatusEnum::EXPIRED => 'Expirado',
+    EducationalPlanStatusEnum::CANCELED => 'Cancelado',
+};
+
+$statusBadgeClass = match($status) {
+    EducationalPlanStatusEnum::ACTIVE => 'bg-success',
+    EducationalPlanStatusEnum::EXPIRED => 'bg-secondary',
+    EducationalPlanStatusEnum::CANCELED => 'bg-danger',
+};
+
+// Calcular duração do plano
+$duracao = 'Indeterminado';
+if ($plan->getEndDate()) {
+    $diff = $plan->getStartDate()->diff($plan->getEndDate());
+    $meses = $diff->m + ($diff->y * 12);
+    $dias = $diff->d;
+    
+    if ($meses > 0 && $dias > 0) {
+        $duracao = "{$meses} mês(es) e {$dias} dia(s)";
+    } elseif ($meses > 0) {
+        $duracao = "{$meses} mês(es)";
+    } else {
+        $duracao = "{$dias} dia(s)";
+    }
+}
+?>
+
+<section class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 mx-auto" style="max-width: 900px;">
+        <div class="card-body p-4">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-4">
+                <h1 class="fw-bold text-primary d-flex align-items-center justify-content-center gap-2">
+                    <span class="material-icons">card_membership</span> Detalhes do Plano
+                </h1>
+                <p class="text-secondary">Informações completas do plano educacional</p>
+            </div>
+
+            <!-- Informações Principais -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">info</span> Informações Principais
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-8">
+                        <label class="form-label fw-semibold text-muted">Nome do Plano</label>
+                        <p class="form-control-plaintext border-bottom fs-5 fw-bold text-primary"><?= htmlspecialchars($plan->getName()) ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-muted">Status</label>
+                        <p class="form-control-plaintext border-bottom">
+                            <span class="badge <?= $statusBadgeClass ?> fs-6"><?= $statusLabel ?></span>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Valor</label>
+                        <p class="form-control-plaintext border-bottom fs-5 fw-bold text-success"><?= $valueFormatted ?></p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">ID do Plano</label>
+                        <p class="form-control-plaintext border-bottom">#<?= $plan->getId() ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Período de Vigência -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">date_range</span> Período de Vigência
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-muted">Data de Início</label>
+                        <p class="form-control-plaintext border-bottom">
+                            <span class="material-icons text-primary align-middle" style="font-size: 1.2rem;">event</span>
+                            <?= $startDateFormatted ?>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-muted">Data de Término</label>
+                        <p class="form-control-plaintext border-bottom">
+                            <span class="material-icons text-primary align-middle" style="font-size: 1.2rem;">event_busy</span>
+                            <?= $endDateFormatted ?: 'Sem data de término' ?>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-muted">Duração</label>
+                        <p class="form-control-plaintext border-bottom">
+                            <span class="material-icons text-primary align-middle" style="font-size: 1.2rem;">schedule</span>
+                            <?= $duracao ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações do Sistema -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <span class="material-icons align-middle">history</span> Informações do Sistema
+                </h5>
+                
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Criado em</label>
+                        <p class="form-control-plaintext border-bottom text-muted">
+                            <span class="material-icons align-middle" style="font-size: 1rem;">add_circle</span>
+                            <?= $createdAtFormatted ?>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-muted">Última atualização</label>
+                        <p class="form-control-plaintext border-bottom text-muted">
+                            <span class="material-icons align-middle" style="font-size: 1rem;">update</span>
+                            <?= $updatedAtFormatted ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <a href="/planos" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+                    <span class="material-icons">arrow_back</span>
+                    Voltar
+                </a>
+                <div class="d-flex gap-2">
+                    <a href="/planos/editar?id=<?= $plan->getId() ?>" class="btn btn-warning d-flex align-items-center gap-2">
+                        <span class="material-icons">edit</span>
+                        Editar
+                    </a>
+                    <a href="/planos/excluir?id=<?= $plan->getId() ?>" 
+                       class="btn btn-danger d-flex align-items-center gap-2"
+                       onclick="return confirm('Tem certeza que deseja excluir este plano?')">
+                        <span class="material-icons">delete</span>
+                        Excluir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.form-label {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.form-control-plaintext {
+    padding: 0.5rem 0;
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+@media (max-width: 767.98px) {
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .d-flex.gap-2 {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>

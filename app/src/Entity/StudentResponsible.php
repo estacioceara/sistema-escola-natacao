@@ -4,19 +4,30 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 class StudentResponsible
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private int $id;
 
+    #[ORM\ManyToOne(targetEntity: Address::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private Address $address;
 
+    #[ORM\Column(length: 100)]
     private string $name;
 
+    #[ORM\Column(length: 100)]
     private string $email;
 
+    #[ORM\Column(length: 20)]
     private string $phone;
 
+    #[ORM\Column(length: 14)]
     private string $document;
 
     public function getId(): int

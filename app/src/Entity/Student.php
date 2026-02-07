@@ -29,7 +29,12 @@ class Student
     #[ORM\Column(length: 255)]
     private string $notes;
 
+    #[ORM\ManyToOne(targetEntity: Address::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private Address $address;
+
+    #[ORM\ManyToOne(targetEntity: StudentResponsible::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private StudentResponsible $studentResponsible;
 
     public function __construct(
@@ -41,13 +46,18 @@ class Student
         Address $address,
         StudentResponsible $studentResponsible,
     ) {
-        $this->name = $name;
-        $this->birthDate = $birthDate;
-        $this->cpf = $cpf;
-        $this->phone = $phone;
-        $this->notes = $notes;
-        $this->address = $address;
-        $this->studentResponsible = $studentResponsible;
+        $this->setName($name);
+        $this->setBirthDate($birthDate);
+        $this->setCpf($cpf);
+        $this->setPhone($phone);
+        $this->setNotes($notes);
+        $this->setAddress($address);
+        $this->setStudentResponsible($studentResponsible);
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string
@@ -77,7 +87,8 @@ class Student
 
     public function setCpf(?string $cpf): void
     {
-        $this->cpf = $cpf;
+        // Remove pontos, traços e outros caracteres não numéricos
+        $this->cpf = $cpf ? preg_replace('/\D/', '', $cpf) : null;
     }
 
     public function getPhone(): string

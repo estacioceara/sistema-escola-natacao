@@ -64,7 +64,22 @@ final class EducationalPlanController extends AbstractController
 
     public function view(): void
     {
-        $this->render(self::VIEW_VIEW);
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        
+        if ($id === 0) {
+            $this->redirectToURL('/planos');
+            return;
+        }
+
+        try {
+            $plan = $this->service->find($id);
+            
+            $this->render(self::VIEW_VIEW, [
+                'plan' => $plan,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            $this->redirectToURL('/planos');
+        }
     }
 
     public function remove(): void
