@@ -13,6 +13,9 @@ db:
 composer_install:
 	docker compose exec -T php bash -c "composer install"
 
+reset_db:
+	docker compose exec -T php bash -c "php bin/doctrine orm:schema-tool:drop --force"
+
 migrate:
 	docker compose exec -T php bash -c "php bin/doctrine orm:schema-tool:update --force"
 
